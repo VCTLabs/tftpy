@@ -90,8 +90,8 @@ jobs:
           draft: false
           prerelease: false
           files: |
-            wheels/proc*.whl
-            wheels/proc*.tar.gz
+            wheels/tft*.whl
+            wheels/tft*.tar.gz
 
   docs:
     name: Release docs
@@ -105,7 +105,7 @@ jobs:
 
     - uses: actions/setup-python@v4
       with:
-        python-version: '3.9'
+        python-version: '3.8'
 
     - name: Add python requirements
       run: |
@@ -124,7 +124,7 @@ jobs:
 
     - name: set nojekyll for github
       run: |
-        sudo touch docs/_build/html/.nojekyll
+        sudo touch doc/_build/html/.nojekyll
 
 #    - name: Deploy docs to gh-pages
 #      if: ${{ github.event_name == 'push' }}
