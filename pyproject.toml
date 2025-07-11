@@ -1,29 +1,48 @@
 [build-system]
-requires = ["setuptools>=61.0", "wheel"]
+requires = [
+    "setuptools>=45",
+    "setuptools_scm[toml]>=6.0",
+]
 build-backend = "setuptools.build_meta"
 
-[tool.setuptools.packages.find]
-where = ["."]
-include = ["tftpy"]
+[tool.setuptools_scm]
+version_scheme = "post-release"
 
-[project]
-name = "tftpy"
-version = "0.8.6"
-authors = [
-  { name="Michael Soulier", email="msoulier@digitaltorque.ca" },
+[tool.pytest.ini_options]
+minversion = "6.0"
+log_cli =  false
+doctest_optionflags = ["ELLIPSIS", "NORMALIZE_WHITESPACE",]
+addopts = "--strict-markers -rxX --tb=long --color=yes"
+markers = "subscript"
+testpaths = [
+    "tests/",
 ]
-description = "A TFTP protocol library for Python"
-readme = "README.md"
-requires-python = ">=3.8"
-classifiers = [
-    "Programming Language :: Python :: 3",
-    "Operating System :: OS Independent",
+
+[tool.coverage.run]
+branch = true
+source = [
+    "tftpy/",
+    ".tox/py*/lib/python*/site-packages/",
 ]
-license = { text = "MIT" }
+omit = [
+    "tests/*",
+    ".tox",
+]
 
-[project.urls]
-Homepage = "https://github.com/msoulier/tftpy"
-Issues = "https://github.com/msoulier/tftpy/issues"
+[tool.coverage.paths]
+source = ["tftpy"]
 
-[tools.setuptools]
-script-files = ["bin/tftpy_client.py", "bin/tftpy_server.py"]
+[tool.coverage.report]
+fail_under = 70
+show_missing = true
+exclude_lines = [
+    "pragma: no cover",
+    "raise NotImplementedError",
+    "raise AssertionError",
+    "if typing.TYPE_CHECKING:",
+    "if TYPE_CHECKING:",
+]
+omit = [
+    "doc*",
+    "tests/*",
+]
