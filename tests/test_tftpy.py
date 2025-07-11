@@ -4,6 +4,7 @@
 
 import logging
 import os
+import sys
 import threading
 import time
 import unittest
@@ -643,6 +644,7 @@ class TestTftpyMisc(unittest.TestCase):
         else:
             server.listen("localhost", 20001)
 
+    @unittest.skipUnless(sys.platform == "linux", "Linux only fcntl")
     def testStdin(self):
         cdir = os.path.dirname(os.path.abspath(__file__))
         script = os.path.join(cdir, "stdin.py")
